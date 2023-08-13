@@ -15,6 +15,7 @@ function ProdutsSection() {
         getAllProducts().then((res) => { setProducts(res) })
     }, [])
 
+
     // Product functionality in small devices
 
     const initialIndex = {
@@ -22,26 +23,27 @@ function ProdutsSection() {
     };
 
     const [index, setindex] = useState(initialIndex);
-    // let maxIncrement = products!.length - 1;
-    // const increment = () => {
-    //     if (index.count < maxIncrement) {
-    //         setindex({ count: index.count + 1 });
-    //         document.getElementById("decButton")?.removeAttribute('disabled')
-    //     }
-    //     else {
-    //         document.getElementById("incButton")?.setAttribute('disabled', 'true')
-    //     }
-    // };
+    const increment = () => {
+        let maxIncrement = products!.length - 1;
 
-    // const decrement = () => {
-    //     if (index.count > 0) {
-    //         setindex({count: index.count - 1 });
-    //         document.getElementById("incButton")?.removeAttribute('disabled')
-    //     }
-    //     else {
-    //         document.getElementById("decButton")?.setAttribute('disabled', 'true')
-    //     }
-    // };
+        if (index.count < maxIncrement) {
+            setindex({ count: index.count + 1 });
+            document.getElementById("decButton")?.removeAttribute('disabled')
+        }
+        else {
+            document.getElementById("incButton")?.setAttribute('disabled', 'true')
+        }
+    };
+
+    const decrement = () => {
+        if (index.count > 0) {
+            setindex({ count: index.count - 1 });
+            document.getElementById("incButton")?.removeAttribute('disabled')
+        }
+        else {
+            document.getElementById("decButton")?.setAttribute('disabled', 'true')
+        }
+    };
 
     return (
         <Wrapper>
@@ -54,26 +56,38 @@ function ProdutsSection() {
                         Check What We Have
                     </h2>
                 </div>
+
+                {/*  visible on standard size */}
                 <div className='hidden w-full sm:grid md:grid-cols-2 lg:grid-cols-3 mx-auto gap-3'>
 
                     {products?.map((item) => {
-
                         return (
-                            <div key={item.title}>
+
+                            <Link key={item.title} href={`/components/Products/${item._id}`}>
                                 <ProductCard item={item} />
-                            </div>
+                            </Link>
+
                         )
                     })}
 
                 </div>
-                {/* <div className='sm:hidden flex justify-between items-center'>
-                    <button id='decButton' className='w-10 h-10 rounded-full bg-gray-500' onClick={decrement}>&lt;</button>
-                    <div className='w-3/4 h-96 '>
-                        {<ProductCard items={products[index.count]} />}
-                    </div>
-                    <button id='incButton' className='w-10 h-10 rounded-full bg-gray-500' onClick={increment}>&gt;</button>
 
-                </div> */}
+
+                {/*visible on mobiles devices */}
+                <div className='sm:hidden flex justify-between items-center'>
+                    <button id='decButton' className='w-10 h-10 font-extrabold text-lg text-slate-800 rounded-full shadow-md  shadow-slate-800 bg-gray-100' onClick={decrement}>&lt;</button>
+                    <div className='w-3/4 h-96 '>
+
+                        {
+                            products &&
+                            <Link href={`/components/Products/${products[index.count]._id}`}>
+                                <ProductCard item={products[index.count]} />
+                            </Link>
+                        }
+                    </div>
+                    <button id='incButton' className='w-10 h-10 font-extrabold text-lg text-slate-800 rounded-full shadow-md  shadow-slate-800 bg-gray-100' onClick={increment}>&gt;</button>
+
+                </div>
 
                 <div className='w-full flex justify-end'>
                     <button className=' w-full sm:w-2/4  md:w-2/5 xl:w-2/6 bg-slate-900 font-medium text-xl text-white p-3'>

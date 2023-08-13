@@ -40,9 +40,7 @@ export default function Page() {
     const result = await res.json()
     alert(`item added successfully` )
 
-    // cookies().set("user_name","huxaifa")
-    // console.log("handle cart funtion response .....................",cookies().set("name" , 'huzaifa'))
-
+  
   }
   const increment = () => {
     setQuantity({ count: quantity.count + 1 });
