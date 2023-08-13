@@ -6,11 +6,11 @@ import { urlForImage } from '../../../../../sanity/lib/image'
 import Image from 'next/image'
 import { BsCart3 } from 'react-icons/bs'
 import { productInterface } from '../page'
-import { cookies } from 'next/dist/client/components/headers'
+import { Toaster, toast } from 'react-hot-toast'
 
 
 export default function Page() {
-  
+
   const initialQuantity = {
     count: 1,
   };
@@ -26,21 +26,44 @@ export default function Page() {
       setProduct(res[0])
     })
   }, [])
-  
-  const handleAddToCart = async () =>{
+
+  let addToCart = async () => {
+
     const res = await fetch("/api/cart", {
       method: "POST",
       body: JSON.stringify({
-        quantity : quantity.count,
+        quantity: quantity.count,
         product_id: product?._id,
-        size : size,
-        price : product?.price
+        size: size,
+        price: product?.price
       })
-    })
-    const result = await res.json()
-    alert(`item added successfully` )
 
-  
+    })
+    if (res.ok) {
+      return true
+    }
+    else {
+      throw new Error("failed to adding item to cart")
+    }
+
+  }
+  const handleAddToCart = async () => {
+
+    try {
+      await toast.promise(addToCart(), {
+        loading: "Adding item to cart",
+        success: "Item Added Successfully",
+        error: "erron in adding item"
+      })
+    } catch (error) {
+      toast.error("An error occured while adding item")
+    }
+
+    // toast.success("item added to cart successfully")
+
+
+
+
   }
   const increment = () => {
     setQuantity({ count: quantity.count + 1 });
@@ -70,6 +93,12 @@ export default function Page() {
   if (product)
     return (
       <Wrapper>
+        <div>
+          <Toaster
+            position='top-right'
+
+          />
+        </div>
         <div className='lg:grid grid-cols-2 mt-6'>
 
           {/* left side div */}
