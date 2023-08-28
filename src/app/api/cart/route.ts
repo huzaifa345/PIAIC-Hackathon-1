@@ -7,14 +7,13 @@ import { eq } from "drizzle-orm";
 
 
 export const GET = async (request: NextRequest) => {
-    console.log(request)
     const id = cookies().get("user_id")!.value
     if (id) {
         try {
             const res = await db.select().from(cartTable).where(eq(cartTable.user_id, id))
             return NextResponse.json({ res })
 
-        } 
+        }
         catch (error) {
             console.log(error)
             return NextResponse.json({ message: "something went wrong" })
@@ -24,13 +23,13 @@ export const GET = async (request: NextRequest) => {
         return NextResponse.json({ message: "something went wrong" })
     }
 
+
 }
 
 
 export const POST = async (request: NextRequest) => {
     const uid = uuid()
     const user_id = cookies().get("user_id")
-    console.log(user_id)
     if (!user_id) {
 
         cookies().set("user_id", uid)
@@ -43,7 +42,7 @@ export const POST = async (request: NextRequest) => {
             quantity: req.quantity,
             user_id: cookies().get("user_id")?.value as string,
             size: req.size,
-            price : req.price
+            price: req.price
         }).returning()
 
 

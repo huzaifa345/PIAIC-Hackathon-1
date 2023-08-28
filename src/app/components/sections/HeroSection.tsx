@@ -2,7 +2,6 @@ import React from 'react'
 import Wrapper from '../shared/Wrapper'
 import Image from 'next/image'
 import HeroImage from '@/app/assets/images/hero image.webp'
-// import HeroImage from '../../assets/images/hero image.webp'
 import HeroFeatured1 from '../../assets/images/hero/Featured1.webp'
 import HeroFeatured2 from '../../assets/images/hero/Featured2.webp'
 import HeroFeatured3 from '../../assets/images/hero/Featured3.webp'
@@ -53,11 +52,10 @@ function HeroSection() {
 
                 {/* right side div */}
                 <div className='hidden w-1/2  lg:block'>
-                    <div className='mt-10 hero-image-bg block rounded-full w-[550px] h-[550px] bg-[#ffece3]'>
+                    <div className='mt-10 hero-image-bg  rounded-full w-[550px] h-[550px] bg-[#ffece3]'>
                         <Image
                             src={HeroImage}
                             alt="hero section image"
-                            className='absolute'
                         />
                     </div>
 

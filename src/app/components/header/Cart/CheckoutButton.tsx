@@ -12,16 +12,8 @@ function CheckoutButton(props: props) {
     const { cartData } = props;
 
     async function checkOut() {
-        console.log(cartData)
         const stripe =await getStripePromise();
-        let sample = [
-            {
-                product: 1,
-                name: "stripe product",
-                price: 400,
-                quantity : 2
-            }
-        ]
+        
         const response = await fetch("/api/stripe", {
             method: "POST",
             headers :{"Content-type":"application/json "},
@@ -32,9 +24,10 @@ function CheckoutButton(props: props) {
            stripe?.redirectToCheckout({sessionId: data.session.id})
         }
     }
+    // sm:w-2/4  md:w-2/5 xl:w-2/6 lg:2/4
     return (
         <div className=' w-full '>
-            <button className='absolute bottom-0 right-0  mx-auto sm:w-2/4  md:w-2/5 xl:w-2/6 lg:2/4 bg-slate-900 font-medium text-xl text-white p-3 text-center' onClick={checkOut}>Check Out</button>
+            <button className='   w-full   bg-slate-900 font-medium text-xl text-white p-3 text-center' onClick={checkOut}>Check Out</button>
         </div>
     )
 }

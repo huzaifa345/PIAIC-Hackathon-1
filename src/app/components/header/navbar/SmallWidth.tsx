@@ -20,10 +20,12 @@ function SmallWidth(props: props) {
         <div id='navBar' className='sticky top-0 lg:hidden w-full text-white h-24'>
             <div className='flex justify-between flex-wrap items-center shadow-md p-6 '>
                 <div>
-                    <Image
-                        src={logo}
-                        alt='logo'
-                    />
+                    <Link href={`/`}>
+                        <Image
+                            src={logo}
+                            alt='logo'
+                        />
+                    </Link>
                 </div>
 
                 {/*  navbar open / close button */}
@@ -47,10 +49,9 @@ function SmallWidth(props: props) {
 
             {
                 sideNavOpen &&
-
                 //  Drawer
-
-                <div id='sideNav' className='bg-white border mt-[.5] w-full width-animations shadow-2xl lg:text-xl h-[100vh-6rem] max-h-screen'>
+                <div id='sideNav' className='bg-white border mt-[.5] w-full width-animations shadow-2xl lg:text-xl h-[100vh-6rem] max-h-screen'
+                >
 
                     <div className=' text-center text-gray-900 py-30 w-full h-fit order-last mt-10'>
                         <div className='p-3 hover:scale-110 transition-transform'>
@@ -66,31 +67,30 @@ function SmallWidth(props: props) {
                             </button>
                         </div>
 
-                        <div className='w-1/4 mx-auto font-medium'>
+                        <div className='w3/4 md:w-1/4 mx-auto font-medium'>
                             <NavLinks>
-                                <Link href={'/'}>
+                                <Link href={'/components/Products/categories/male'} onClick={() => { close("sideNav", setSideNavOpen, sideNavOpen) }}>
                                     Male
                                 </Link>
                             </NavLinks>
                             <NavLinks>
-                                <Link href={''}>
+                                <Link href={'/components/Products/categories/female'} onClick={() => { close("sideNav", setSideNavOpen, sideNavOpen) }}>
                                     Female
                                 </Link>
                             </NavLinks>
                             <NavLinks>
-                                <Link href={''}>
+                                <Link href={'/components/Products/categories/kids'} onClick={() => { close("sideNav", setSideNavOpen, sideNavOpen) }}>
                                     Kids
                                 </Link>
                             </NavLinks>
                             <NavLinks>
-                                <Link href={'/components/Products'}>
+                                <Link href={'/components/Products'} onClick={() => { close("sideNav", setSideNavOpen, sideNavOpen) }}>
                                     All Products
                                 </Link>
                             </NavLinks>
                         </div>
                     </div>
                 </div>
-
             }
 
             {

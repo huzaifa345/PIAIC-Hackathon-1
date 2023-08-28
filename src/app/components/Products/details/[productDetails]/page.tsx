@@ -1,16 +1,15 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { getProductDetails } from '@/lib/getProductDetails'
-import Wrapper from '../../shared/Wrapper'
-import { urlForImage } from '../../../../../sanity/lib/image'
+import Wrapper from '../../../shared/Wrapper'
+import { urlForImage } from '../../../../../../sanity/lib/image'
 import Image from 'next/image'
 import { BsCart3 } from 'react-icons/bs'
-import { productInterface } from '../page'
+import { productInterface } from '../../page'
 import { Toaster, toast } from 'react-hot-toast'
 
 
 export default function Page() {
-
   const initialQuantity = {
     count: 1,
   };
@@ -18,6 +17,7 @@ export default function Page() {
   const [quantity, setQuantity] = useState(initialQuantity);
   const [product, setProduct] = useState<productInterface>()
   const [size, setSize] = useState('sm')
+  const [productImage, setProductImage] = useState(product?.image)
 
   useEffect(() => {
     let url = document.URL.split("/")
@@ -29,7 +29,7 @@ export default function Page() {
 
   let addToCart = async () => {
 
-    const res = await fetch("/api/cart", {
+    const response = await fetch("/api/cart", {
       method: "POST",
       body: JSON.stringify({
         quantity: quantity.count,
@@ -39,32 +39,24 @@ export default function Page() {
       })
 
     })
-    if (res.ok) {
+
+    if (response.ok) {
+
       return true
     }
     else {
       throw new Error("failed to adding item to cart")
     }
-
   }
+
   const handleAddToCart = async () => {
-
-    try {
-      await toast.promise(addToCart(), {
-        loading: "Adding item to cart",
-        success: "Item Added Successfully",
-        error: "erron in adding item"
-      })
-    } catch (error) {
-      toast.error("An error occured while adding item")
-    }
-
-    // toast.success("item added to cart successfully")
-
-
-
-
+    await toast.promise(addToCart(), {
+      loading: "Adding item to cart",
+      success: "Item Added Successfully",
+      error: "error in adding item"
+    }, { id: 'cart-toast' })
   }
+
   const increment = () => {
     setQuantity({ count: quantity.count + 1 });
   };
@@ -87,7 +79,6 @@ export default function Page() {
     });
     event.currentTarget.classList.add('bg-gray-100', 'shadow-md', 'shadow-black')
     setSize(selectedSize)
-    console.log(size)
   }
 
   if (product)
@@ -95,47 +86,37 @@ export default function Page() {
       <Wrapper>
         <div>
           <Toaster
+            toastOptions={{ id: 'cart-toast' }}
             position='top-right'
-
           />
+
         </div>
         <div className='lg:grid grid-cols-2 mt-6'>
 
           {/* left side div */}
           <div className=' p-2 '>
             <div className='w-full flex justify-around p-2'>
-              <div className='w-28 h-28'>
-                <Image
-                  src={urlForImage(product.image).url()}
-                  alt='product image'
-                  height={120}
-                  width={120}
-                  className='hover:bg-gray-300'
-                />
-              </div>
-              <div className='w-28 h-28 '>
-                <Image
-                  src={urlForImage(product.image).url()}
-                  alt='product image'
-                  height={120}
-                  width={120}
-                  className='hover:bg-gray-300'
-                />
-              </div>
-              <div className='w-28 h-28 '>
-                <Image
-                  src={urlForImage(product.image).url()}
-                  alt='product image'
-                  height={120}
-                  width={120}
-                  className='hover:bg-gray-300'
+              {product.moreImages &&
+                product.moreImages.map((i: any) => {
+                  return (
+                    <div onMouseOut={()=>{setProductImage(product.image)}} onMouseOver={()=>{setProductImage(i)}} key={i.asset.reference} className='w-28 h-28'>
+                      <Image
+                        src={urlForImage(i).url()}
+                        alt='product image'
+                        height={120}
+                        width={120}
+                        className='hover:bg-gray-300'
+                      />
+                    </div>
+                  )
+                })
 
-                />
-              </div>
+              }
+
             </div>
             <div className='mt-5 w-full'>
               <Image
-                src={urlForImage(product.image).url()}
+                src={urlForImage(productImage || product.image).url()}
                 width={500}
                 height={500}
                 alt='product image'

@@ -1,4 +1,4 @@
-import React, { SetStateAction } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import logo from '../../../../../public/Logo.webp'
 import Link from 'next/link'
@@ -8,40 +8,62 @@ import NavLinks from '../../shared/NavLinks'
 import Cart from '../Cart/Cart'
 
 type props = {
-    cartState : boolean;
-    cartSetState : React.Dispatch<React.SetStateAction<boolean>>
+    cartState: boolean;
+    cartSetState: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 function Fullwidth(props: props) {
+    const handleNavClick = (item: any) => {
+        document.getElementsByClassName("border-b-2")[0]?.classList.remove("border-b-2","border-black")
+        
+        item.classList.add("border-b-2","border-black")
+        
+    }
+    
     return (
-        <div id='navBar' className='hidden h-24 px-2 font-medium  sticky w-full lg:flex justify-between items-center shadow-md '>
+        <div id='navBar'
+            className='hidden h-24 px-2 font-medium  sticky w-full lg:flex justify-between items-center shadow-md '
+        >
             <div>
-                <Image
-                    src={logo}
-                    alt='logo'
-                />
-            </div>
-            <NavLinks>
-                <Link href={'/'}>
-                    Male
-                </Link>
-            </NavLinks>
+                <Link href={`/`}>
 
-            <NavLinks>
-                <Link href={''}>
+                    <Image
+                        src={logo}
+                        alt='logo'
+                    />
+                </Link>
+            </div>
+            <Link href={`/components/Products/categories/male`}
+                onClick={(e) => { handleNavClick(e.currentTarget) }}
+            >
+                <NavLinks>
+                    Male
+                </NavLinks>
+            </Link>
+            <Link href={'/components/Products/categories/female'}
+                onClick={(e) => { handleNavClick(e.currentTarget) }}
+            >
+                <NavLinks>
                     Female
-                </Link>
-            </NavLinks>
-            <NavLinks>
-                <Link href={''}>
+                </NavLinks>
+            </Link>
+            <Link href={'/components/Products/categories/kids'}
+                onClick={(e) => { handleNavClick(e.currentTarget) }}
+            >
+
+                <NavLinks>
                     Kids
-                </Link>
-            </NavLinks>
-            <NavLinks>
-                <Link href={'/components/Products'}>
+                </NavLinks>
+            </Link>
+            <Link href={'/components/Products'}
+                onClick={(e) => { handleNavClick(e.currentTarget) }}
+            >
+
+                <NavLinks>
                     All Products
-                </Link>
-            </NavLinks>
+                </NavLinks>
+            </Link>
+
 
             <div className='flex items-center rounded-md w-1/4 group border-2 border-gray-200 shadow-md text-gray-600 hover:border-b-2 hover:border-b-black'>
                 <label htmlFor="searchBar" className=' group-focus-within:text-black h-8 p-1'>

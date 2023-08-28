@@ -2,8 +2,9 @@ import Image from 'next/image'
 import React from 'react'
 import logo from '../../../../public/Logo.webp'
 import Wrapper from '../shared/Wrapper'
-import { BsFacebook, BsLinkedin, BsTwitter } from 'react-icons/bs'
+import { BsFacebook, BsLinkedin, BsTwitter, BsGithub } from 'react-icons/bs'
 import { AiOutlineCopyright } from 'react-icons/ai'
+import Link from 'next/link'
 
 function Footer() {
   return (
@@ -13,11 +14,15 @@ function Footer() {
 
           <div className='lg:grid grid-cols-4 gap-2 w-full h-max space-y-6 lg:h-3/4 lg:space-y-0'>
             <div className='space-y-8 lg:h-full h-max'>
-              <Image
-                alt='Dinemart logo'
-                src={logo}
-                width={180}
-              />
+              <Link href={`/`}>
+                <Image
+                  alt='Dinemart logo'
+                  src={logo}
+                  width={180}
+                />
+              </Link>
+
+
               <p className='text-xl p-2'>
                 Small, artisan label that offers a thoughtfully curated collection of high quality everyday essentials made.
               </p>
@@ -86,13 +91,17 @@ function Footer() {
       </Wrapper>
       <div className='mt-8 lg:mt-0 w-full border-t-2 text-center border-t-black space-y-3 lg:space-y-0 lg:grid grid-cols-3 gap-3 py-5 text-lg'>
         <div className='flex items-center justify-center'>
-          Copyright  <AiOutlineCopyright className='mx-1' />  2023 Dine Market
+          <p>Copyright</p>  <AiOutlineCopyright className='mx-1' />  <p>2023 Dine Market</p>
         </div>
         <div className='flex items-center justify-center'>
-          design by <b className='px-1'> Weird Design Studio </b>
+          <p>design by</p> <b className='px-1'> Weird Design Studio </b>
         </div>
-        <div className='flex items-center justify-center'>
-          Code By <b className='px-1'> Huzaifa Jawed </b>
+        <div className='flex items-center justify-center '>
+          <p>Code By</p>
+          <Link className='flex items-center justify-center' href={'https://github.com/huzaifa345/PIAIC-Hackathon-1'} target='_blank'>
+            <BsGithub className='w-10 h-10 text-2xl rounded-lg p-2' />
+            <b>Huzaifa Jawed</b>
+          </Link>
         </div>
       </div>
 

@@ -12,7 +12,7 @@ function ProdutsSection() {
     const [products, setProducts] = useState<productInterface[]>()
 
     useEffect(() => {
-        getAllProducts().then((res) => { setProducts(res) })
+        getAllProducts("all").then((res) => { setProducts(res) })
     }, [])
 
 
@@ -63,7 +63,7 @@ function ProdutsSection() {
                     {products?.map((item) => {
                         return (
 
-                            <Link key={item.title} href={`/components/Products/${item._id}`}>
+                            <Link key={item.title} href={`/components/Products/details/${item._id}`}>
                                 <ProductCard item={item} />
                             </Link>
 

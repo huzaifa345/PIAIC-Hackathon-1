@@ -6,12 +6,11 @@ import ProductsSection from "./components/sections/ProdutsSection";
 import PromotionSection from "./components/sections/PromotionSection";
 
 export default function Home() {
-
-  return (
+   return (
     <main>
       <HeroSection />
       <PromotionSection />
-      <ProductsSection />
+      <ProductsSection  />
       <NewsLetter />
     </main>
   )

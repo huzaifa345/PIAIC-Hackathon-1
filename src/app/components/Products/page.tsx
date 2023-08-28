@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 import Wrapper from '../shared/Wrapper'
 import ProductCard from '../shared/ProductCard'
 import Link from 'next/link'
@@ -26,16 +26,25 @@ export interface productInterface {
             width: number;
             height: number;
         };
-    }
+    },
+    moreImages : any
+    // moreImages :{
+    //     asset :{
+    //         _type: 'reference';
+    //         _ref: string;
+    //     },
+    //     _type : 'product detail images',
+    //     _key : string
+
+    // }[] ;
 }
 
 
-function Index() {
-
+export default function Index (props : any) {
     const [products, setProducts] = useState<productInterface[]>()
 
     useEffect(() => {
-        getAllProducts().then((res) => { setProducts(res) })
+        getAllProducts(props.category!).then((res) => { setProducts(res) }) 
     }, [])
 
     return (
@@ -44,7 +53,7 @@ function Index() {
                 {products?.map((product: productInterface) => {
                     return (
                         <div key={product._id} className='h-96'>
-                            <Link href={`/components/Products/${product._id}`}>
+                            <Link href={`/components/Products/details/${product._id}`}>
                                 <ProductCard item={product} />
                             </Link>
                         </div>
@@ -55,5 +64,8 @@ function Index() {
 
     )
 }
+Index.defaultProps = {
+    category : "all"
+}
 
-export default Index
+// export default Index

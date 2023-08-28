@@ -1,4 +1,3 @@
-import { defineField, defineType } from "sanity"
 
 let validate = (rule: any, min: number = 0, max: number = 0) => {
     if (min && max) {
@@ -32,6 +31,19 @@ export const product = {
             title: 'Product Image',
             type: 'image',
             validation: (Rule: any) => validate(Rule)
+
+        },
+        {
+            name: 'moreImages',
+            title: 'Product Image',
+            type: 'array',
+            of : [
+                {
+                    type : 'image',
+                    name : 'product detail images'
+                }
+            ],
+            validation: (Rule: any) => Rule.min(3).max(3) 
 
         },
         {
